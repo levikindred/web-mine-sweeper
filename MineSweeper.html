@@ -14,7 +14,8 @@
                 text-align: center;
                 width: 12px;
             }
-            div.empty {
+            div.explosion {
+                background-color: red;
                 border: 1px solid grey;
                 height: 14px;
                 width: 14px;
@@ -48,6 +49,56 @@
                 margin-left: 6px;
                 margin-top: -1px;
                 width: 1px;
+            }
+            div.mine {
+                background-color: black;
+                border-radius: 50%;
+                height: 8px;
+                margin-left: 3px;
+                margin-top: 3px;
+                width: 8px;
+            }
+            div.mine-spike-0 {
+                background-color: black;
+                height: 12px;
+                margin-left: 6.5px;
+                margin-top: -10px;
+                width: 1px;
+            }
+            div.mine-spike-1 {
+                background-color: black;
+                height: 12px;
+                margin-left: 6.5px;
+                margin-top: -12px;
+                width: 1px;
+                -ms-transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+            div.mine-spike-2 {
+                background-color: black;
+                height: 12px;
+                margin-left: 6.5px;
+                margin-top: -12px;
+                width: 1px;
+                -ms-transform: rotate(90deg);
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+            div.mine-spike-3 {
+                background-color: black;
+                height: 12px;
+                margin-left: 6.5px;
+                margin-top: -12px;
+                width: 1px;
+                -ms-transform: rotate(135deg);
+                -webkit-transform: rotate(135deg);
+                transform: rotate(135deg);
+            }
+            div.opened {
+                border: 1px solid grey;
+                height: 14px;
+                width: 14px;
             }
             div.question-mark {
                 color: black;
@@ -98,10 +149,10 @@
     </head>
     <body>
         <div class="field">
-            <div class="cell"><div class="flag"></div><div class="flag-pole"></div><div class="flag-base"></div></div><div class="cell question-mark">?</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell empty one">1</div><div class="cell empty two">2</div><div class="cell empty three">3</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell empty eight">8</div><div class="cell empty"></div><div class="cell empty four">4</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell empty seven">7</div><div class="cell empty six">6</div><div class="cell empty five">5</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="flag"></div><div class="flag-pole"></div><div class="flag-base"></div></div><div class="cell question-mark">?</div><div class="cell opened"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell explosion"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell opened one">1</div><div class="cell opened two">2</div><div class="cell opened three">3</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell opened eight">8</div><div class="cell opened"></div><div class="cell opened four">4</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell opened seven">7</div><div class="cell opened six">6</div><div class="cell opened five">5</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
