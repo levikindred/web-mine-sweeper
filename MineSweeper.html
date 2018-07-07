@@ -1,6 +1,46 @@
 <!DOCTYPE HTML>
 <html lang="en">
     <head>
+        <script>
+            function Cell(row, column, mined, flagged, questionMarked, exposed) {
+                this.row = row;
+                this.column = column;
+                this.minded = mined;
+                this.flagged = flagged;
+                this.questionMarked = questionMarked;
+                this.exposed = exposed;
+            }
+
+            function createCellArray(rows, columns, mines) {
+                var cellArray = new Array(rows);
+                for (var r = 0; r < rows; r++) {
+                    cellArray[r] = new Array(columns);
+                    for (var c = 0; c < columns; c++) {
+                        cellArray[r][c] = new Cell(r, c, false, false, false, false);
+                    }
+                }
+                return cellArray;
+            }
+
+            function generateBlankCell(row, column) {
+                var cell = document.createElement("div");
+                cell.id = "cell-" + row + "-" + column;
+                cell.className = "cell";
+                return cell;
+            }
+
+            window.onload = function() {
+                var rows = 9, columns = 9;
+                var cellArray = createCellArray(rows, columns, 0);
+                var field = document.getElementById("mine-field");
+                for (var r = 0; r < rows; r++) {
+                    for (var c = 0; c < columns; c++) {
+                        var cellDiv = generateBlankCell(cellArray[r][c].row, cellArray[r][c].column);
+                        field.appendChild(cellDiv);
+                    }
+                }
+            }
+        </script>
         <style>
             div.cell {
                 background-color: lightgrey;
@@ -95,7 +135,7 @@
                 -webkit-transform: rotate(135deg);
                 transform: rotate(135deg);
             }
-            div.opened {
+            div.exposed {
                 border: 1px solid grey;
                 height: 14px;
                 width: 14px;
@@ -149,15 +189,16 @@
     </head>
     <body>
         <div class="field">
-            <div class="cell"><div class="flag"></div><div class="flag-pole"></div><div class="flag-base"></div></div><div class="cell question-mark">?</div><div class="cell opened"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell explosion"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell opened one">1</div><div class="cell opened two">2</div><div class="cell opened three">3</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell opened eight">8</div><div class="cell opened"></div><div class="cell opened four">4</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell opened seven">7</div><div class="cell opened six">6</div><div class="cell opened five">5</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="flag"></div><div class="flag-pole"></div><div class="flag-base"></div></div><div class="cell question-mark">?</div><div class="cell exposed"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell explosion"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell exposed one">1</div><div class="cell exposed two">2</div><div class="cell exposed three">3</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell exposed eight">8</div><div class="cell exposed"></div><div class="cell exposed four">4</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell exposed seven">7</div><div class="cell exposed six">6</div><div class="cell exposed five">5</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-        </div>
+        </div> <br><br><br>
+        <div class="field" id="mine-field"></div>
     </body>
 </html>
