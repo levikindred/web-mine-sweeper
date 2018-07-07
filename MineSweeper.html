@@ -11,6 +11,12 @@
                 this.exposed = exposed;
             }
 
+            function cellLeftClick() {
+                if (this.className.indexOf("exposed") == -1) {
+                    this.className += " exposed"; 
+                }
+            }
+
             function createCellArray(rows, columns, mines) {
                 var cellArray = new Array(rows);
                 for (var r = 0; r < rows; r++) {
@@ -37,6 +43,7 @@
                     for (var c = 0; c < columns; c++) {
                         var cellDiv = generateBlankCell(cellArray[r][c].row, cellArray[r][c].column);
                         field.appendChild(cellDiv);
+                        cellDiv.addEventListener("click", cellLeftClick);
                     }
                 }
             }
