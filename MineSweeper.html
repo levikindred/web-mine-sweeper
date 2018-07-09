@@ -12,8 +12,24 @@
             }
 
             function cellLeftClick() {
-                if (this.className.indexOf("exposed") == -1) {
+                if (this.className.indexOf("exposed") == -1 && 
+                    this.className.indexOf("question-mark") == -1 && 
+                    this.className.indexOf("flag") == -1) {
                     this.className += " exposed"; 
+                }
+            }
+
+            function cellRightClick() {
+                if (this.className.indexOf("exposed") == -1) {
+                    if (this.className.indexOf("question-mark") != -1) {
+                        this.className = this.className.replace(/\b\squestion-mark\b/g, "");
+                        this.innerHTML = "";
+                    } else if (this.childNodes.length > 0) {
+                        this.className += " question-mark";
+                        this.innerHTML = "?";
+                    } else {
+                        this.innerHTML = "<div class='flag'></div><div class='flag-pole'></div><div class='flag-base'>";
+                    }
                 }
             }
 
@@ -44,6 +60,7 @@
                         var cellDiv = generateBlankCell(cellArray[r][c].row, cellArray[r][c].column);
                         field.appendChild(cellDiv);
                         cellDiv.addEventListener("click", cellLeftClick);
+                        cellDiv.addEventListener("contextmenu", cellRightClick);
                     }
                 }
             }
@@ -194,7 +211,7 @@
             }
         </style>
     </head>
-    <body>
+    <body oncontextmenu="return false;">
         <div class="field">
             <div class="cell"><div class="flag"></div><div class="flag-pole"></div><div class="flag-base"></div></div><div class="cell question-mark">?</div><div class="cell exposed"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell explosion"><div class="mine"></div><div class="mine-spike-0"></div><div class="mine-spike-1"></div><div class="mine-spike-2"></div><div class="mine-spike-3"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
             <div class="cell"></div><div class="cell exposed one">1</div><div class="cell exposed two">2</div><div class="cell exposed three">3</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
