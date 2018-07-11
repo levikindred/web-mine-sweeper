@@ -9,12 +9,17 @@
                 this.flagged = flagged;
                 this.questionMarked = questionMarked;
                 this.exposed = exposed;
+
+                this.div = document.createElement("div");
+                this.div.id = "cell-" + row + "-" + column;
+                this.div.className = "cell";
+                this.div.addEventListener("click", cellLeftClick);
+                this.div.addEventListener("contextmenu", cellRightClick);
             }
 
             function cellLeftClick() {
-                if (this.className.indexOf("exposed") == -1 && 
-                    this.className.indexOf("question-mark") == -1 && 
-                    this.className.indexOf("flag") == -1) {
+                if (this.className.indexOf("exposed") == -1 &&
+                    this.childNodes.length === 0) {
                     this.className += " exposed"; 
                 }
             }
@@ -44,23 +49,13 @@
                 return cellArray;
             }
 
-            function generateBlankCell(row, column) {
-                var cell = document.createElement("div");
-                cell.id = "cell-" + row + "-" + column;
-                cell.className = "cell";
-                return cell;
-            }
-
             window.onload = function() {
                 var rows = 9, columns = 9;
                 var cellArray = createCellArray(rows, columns, 0);
                 var field = document.getElementById("mine-field");
                 for (var r = 0; r < rows; r++) {
                     for (var c = 0; c < columns; c++) {
-                        var cellDiv = generateBlankCell(cellArray[r][c].row, cellArray[r][c].column);
-                        field.appendChild(cellDiv);
-                        cellDiv.addEventListener("click", cellLeftClick);
-                        cellDiv.addEventListener("contextmenu", cellRightClick);
+                        field.appendChild(cellArray[r][c].div);
                     }
                 }
             }
