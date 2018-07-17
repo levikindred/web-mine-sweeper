@@ -2,25 +2,28 @@
 <html lang="en">
     <head>
         <script>
-            function Cell(row, column, mined, flagged, questionMarked, exposed) {
+            var cellArray;
+            var rows;
+            var columns;
+
+            function Cell(row, column) {
                 this.row = row;
                 this.column = column;
-                this.minded = mined;
-                this.flagged = flagged;
-                this.questionMarked = questionMarked;
-                this.exposed = exposed;
+                this.exposed = false;
+                this.minded = false;
 
                 this.div = document.createElement("div");
-                this.div.id = "cell-" + row + "-" + column;
+                this.div.id = row + "-" + column;
                 this.div.className = "cell";
                 this.div.addEventListener("click", cellLeftClick);
                 this.div.addEventListener("contextmenu", cellRightClick);
             }
 
             function cellLeftClick() {
-                if (this.className.indexOf("exposed") == -1 &&
-                    this.childNodes.length === 0) {
-                    this.className += " exposed"; 
+                if (this.className.indexOf("exposed") == -1 && this.childNodes.length === 0) {
+                    var row = parseInt(this.id.substring(0, this.id.indexOf("-")));
+                    var column = parseInt(this.id.substring(this.id.indexOf("-") + 1));
+                    exposeCell(row, column);
                 }
             }
 
@@ -38,20 +41,59 @@
                 }
             }
 
-            function createCellArray(rows, columns, mines) {
-                var cellArray = new Array(rows);
+            function getNeighborCells(row, column) {
+                var neighborCells = new Array();
+                if (row > 0) neighborCells.push(cellArray[row - 1][column]);
+                if (column > 0) neighborCells.push(cellArray[row][column - 1]);
+                if (row > 0 && column > 0) neighborCells.push(cellArray[row - 1][column - 1]);
+                if (row + 1 < rows) neighborCells.push(cellArray[row + 1][column]);
+                if (column + 1 < columns) neighborCells.push(cellArray[row][column + 1]);
+                if (row + 1 < rows && column > 0) neighborCells.push(cellArray[row + 1][column - 1]);
+                if (row > 0 && column + 1 < columns) neighborCells.push(cellArray[row - 1][column + 1]);
+                if (row + 1 < rows && column + 1 < columns) neighborCells.push(cellArray[row + 1][column + 1]);
+                return neighborCells;
+            }
+
+            function exposeCell(row, column) {
+                var cell = cellArray[row][column];
+                cell.div.className += " exposed";
+                cell.exposed = true;
+                if (cell.mined) {
+
+                } else {
+                    var neighborCells = getNeighborCells(row, column);
+                    var neighborMineCount = 0;
+                    for (var i = 0; i < neighborCells.length; i++) {
+                        if (neighborCells[i].mined) neighborMineCount += 1;
+                    }
+                    cell.div.innerHTML = neighborMineCount;
+                }
+            }
+
+            function populateCellArray(rows, columns, mines) {
+                cellArray = new Array(rows);
                 for (var r = 0; r < rows; r++) {
                     cellArray[r] = new Array(columns);
                     for (var c = 0; c < columns; c++) {
-                        cellArray[r][c] = new Cell(r, c, false, false, false, false);
+                        cellArray[r][c] = new Cell(r, c);
                     }
                 }
-                return cellArray;
+                var numMines = 0;
+                while (numMines < mines) {
+                    var row = Math.floor(Math.random() * rows);
+                    var column = Math.floor(Math.random() * columns);
+                    if (!cellArray[row][column].mined) {
+                        cellArray[row][column].mined = true;
+                        numMines += 1;
+                    }
+                }
             }
 
             window.onload = function() {
-                var rows = 9, columns = 9;
-                var cellArray = createCellArray(rows, columns, 0);
+                var mines = 10;
+                rows = 9;
+                columns = 9;
+                populateCellArray(rows, columns, mines);
                 var field = document.getElementById("mine-field");
                 for (var r = 0; r < rows; r++) {
                     for (var c = 0; c < columns; c++) {
