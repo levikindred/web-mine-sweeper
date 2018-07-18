@@ -6,6 +6,7 @@
             var rows;
             var columns;
             var numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
+            var gameOver = false;
 
             function Cell(row, column) {
                 this.row = row;
@@ -21,7 +22,7 @@
             }
 
             function cellLeftClick() {
-                if (this.className.indexOf("exposed") == -1 && this.childNodes.length === 0) {
+                if (this.className.indexOf("exposed") == -1 && this.childNodes.length === 0 && !gameOver) {
                     var row = parseInt(this.id.substring(0, this.id.indexOf("-")));
                     var column = parseInt(this.id.substring(this.id.indexOf("-") + 1));
                     exposeCell(row, column);
@@ -62,6 +63,7 @@
                 if (cell.mined) {
                     cell.div.className += " explosion";
                     cell.div.innerHTML = "<div class='mine'></div><div class='mine-spike-0'></div><div class='mine-spike-1'></div><div class='mine-spike-2'></div><div class='mine-spike-3'></div>";
+                    gameOver = true;
                 } else {
                     var neighborCells = getNeighborCells(row, column);
                     var neighborMineCount = 0;
