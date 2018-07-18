@@ -60,7 +60,8 @@
                 cell.div.className += " exposed";
                 cell.exposed = true;
                 if (cell.mined) {
-
+                    cell.div.className += " explosion";
+                    cell.div.innerHTML = "<div class='mine'></div><div class='mine-spike-0'></div><div class='mine-spike-1'></div><div class='mine-spike-2'></div><div class='mine-spike-3'></div>";
                 } else {
                     var neighborCells = getNeighborCells(row, column);
                     var neighborMineCount = 0;
@@ -68,8 +69,8 @@
                         if (neighborCells[i].mined) neighborMineCount += 1;
                     }
                     if (neighborMineCount > 0) {
-                        cell.div.innerHTML = neighborMineCount;
                         cell.div.className += " " + numbers[neighborMineCount - 1];
+                        cell.div.innerHTML = neighborMineCount;
                     }
                 }
             }
