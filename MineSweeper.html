@@ -5,6 +5,7 @@
             var cellArray;
             var rows;
             var columns;
+            var numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
 
             function Cell(row, column) {
                 this.row = row;
@@ -66,7 +67,10 @@
                     for (var i = 0; i < neighborCells.length; i++) {
                         if (neighborCells[i].mined) neighborMineCount += 1;
                     }
-                    cell.div.innerHTML = neighborMineCount;
+                    if (neighborMineCount > 0) {
+                        cell.div.innerHTML = neighborMineCount;
+                        cell.div.className += " " + numbers[neighborMineCount - 1];
+                    }
                 }
             }
 
