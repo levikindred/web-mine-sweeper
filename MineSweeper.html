@@ -71,6 +71,12 @@
                     if (neighborMineCount > 0) {
                         cell.div.className += " " + numbers[neighborMineCount - 1];
                         cell.div.innerHTML = neighborMineCount;
+                    } else {
+                        for (i = 0; i < neighborCells.length; i++) {
+                            if (!neighborCells[i].exposed) {
+                                exposeCell(neighborCells[i].row, neighborCells[i].column);
+                            }
+                        }
                     }
                 }
             }
