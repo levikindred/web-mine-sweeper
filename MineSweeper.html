@@ -5,6 +5,7 @@
             var cellArray;
             var rows;
             var columns;
+            var unmarkedMineCount;
             var numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
             var gameOver = false;
 
@@ -37,9 +38,12 @@
                     } else if (this.childNodes.length > 0) {
                         this.className += " question-mark";
                         this.innerHTML = "?";
+                        unmarkedMineCount += 1;
                     } else {
                         this.innerHTML = "<div class='flag'></div><div class='flag-pole'></div><div class='flag-base'>";
+                        unmarkedMineCount -= 1;
                     }
+                    document.getElementById("mine-count").innerHTML = unmarkedMineCount;
                 }
             }
 
@@ -104,6 +108,7 @@
 
             window.onload = function() {
                 var mines = 10;
+                unmarkedMineCount = 10;
                 rows = 9;
                 columns = 9;
                 populateCellArray(rows, columns, mines);
@@ -113,6 +118,7 @@
                         field.appendChild(cellArray[r][c].div);
                     }
                 }
+                document.getElementById("mine-count").innerHTML = unmarkedMineCount;
             }
         </script>
         <style>
@@ -171,6 +177,19 @@
                 margin-left: 3px;
                 margin-top: 3px;
                 width: 8px;
+            }
+            div.mine-count{
+                background-color: grey;
+                border: 2px solid;
+                font-family: Georgia, serif;
+                font-size: 20px;
+                font-weight: bold;
+                height: 15px;
+                line-height: 13px;
+                margin: 0px;
+                padding: 0px;
+                text-align: center;
+                width: 30px;
             }
             div.mine-spike-0 {
                 background-color: black;
@@ -262,6 +281,7 @@
         </style>
     </head>
     <body oncontextmenu="return false;">
+        <div class="mine-count" id="mine-count"></div>
         <div class="field" id="mine-field"></div>
     </body>
 </html>
