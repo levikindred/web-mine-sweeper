@@ -6,8 +6,11 @@
             var rows;
             var columns;
             var unmarkedMineCount;
+            var timer;
             var numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
             var gameOver = false;
+            var time = 0;
+            var timerStarted = false;
 
             function Cell(row, column) {
                 this.row = row;
@@ -24,6 +27,13 @@
 
             function cellLeftClick() {
                 if (this.className.indexOf("exposed") == -1 && this.childNodes.length === 0 && !gameOver) {
+                    if (!timerStarted) {
+                        timer = setInterval(function() {
+                            time += 1;
+                            document.getElementById("timer").innerHTML = time;
+                        }, 1000);
+                        timerStarted = true;
+                    }
                     var row = parseInt(this.id.substring(0, this.id.indexOf("-")));
                     var column = parseInt(this.id.substring(this.id.indexOf("-") + 1));
                     exposeCell(row, column);
@@ -67,6 +77,7 @@
                 if (cell.mined) {
                     cell.div.className += " explosion";
                     cell.div.innerHTML = "<div class='mine'></div><div class='mine-spike-0'></div><div class='mine-spike-1'></div><div class='mine-spike-2'></div><div class='mine-spike-3'></div>";
+                    clearInterval(timer);
                     gameOver = true;
                 } else {
                     var neighborCells = getNeighborCells(row, column);
@@ -119,6 +130,7 @@
                     }
                 }
                 document.getElementById("mine-count").innerHTML = unmarkedMineCount;
+                document.getElementById("timer").innerHTML = time;
             }
         </script>
         <style>
@@ -178,19 +190,6 @@
                 margin-top: 3px;
                 width: 8px;
             }
-            div.mine-count{
-                background-color: grey;
-                border: 2px solid;
-                font-family: Georgia, serif;
-                font-size: 20px;
-                font-weight: bold;
-                height: 15px;
-                line-height: 13px;
-                margin: 0px;
-                padding: 0px;
-                text-align: center;
-                width: 30px;
-            }
             div.mine-spike-0 {
                 background-color: black;
                 height: 12px;
@@ -227,6 +226,24 @@
                 -ms-transform: rotate(135deg);
                 -webkit-transform: rotate(135deg);
                 transform: rotate(135deg);
+            }
+            div.number-container {
+                display: block;
+                overflow: hidden;
+                width: 144px;
+            }
+            div.number-display {
+                background-color: grey;
+                border: 2px solid;
+                font-family: Georgia, serif;
+                font-size: 20px;
+                font-weight: bold;
+                height: 15px;
+                line-height: 13px;
+                margin: 0px;
+                padding: 0px;
+                text-align: center;
+                width: 30px;
             }
             div.exposed {
                 border: 1px solid grey;
@@ -281,7 +298,10 @@
         </style>
     </head>
     <body oncontextmenu="return false;">
-        <div class="mine-count" id="mine-count"></div>
+        <div class="number-container">
+            <div class="number-display" id="mine-count" style="float: left;"></div>
+            <div class="number-display" id="timer" style="float: right;"></div>
+        </div>
         <div class="field" id="mine-field"></div>
     </body>
 </html>
