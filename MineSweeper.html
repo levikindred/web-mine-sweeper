@@ -3,6 +3,7 @@
     <head>
         <script>
             var cellArray;
+            var cellsToClear;
             var rows;
             var columns;
             var unmarkedMineCount;
@@ -80,6 +81,7 @@
                     clearInterval(timer);
                     gameOver = true;
                 } else {
+                    cellsToClear -= 1;
                     var neighborCells = getNeighborCells(row, column);
                     var neighborMineCount = 0;
                     for (var i = 0; i < neighborCells.length; i++) {
@@ -94,6 +96,9 @@
                                 exposeCell(neighborCells[i].row, neighborCells[i].column);
                             }
                         }
+                    }
+                    if (cellsToClear === 0) {
+                        clearInterval(timer);
                     }
                 }
             }
@@ -122,6 +127,7 @@
                 unmarkedMineCount = 10;
                 rows = 9;
                 columns = 9;
+                cellsToClear = rows * columns - mines;
                 populateCellArray(rows, columns, mines);
                 var field = document.getElementById("mine-field");
                 for (var r = 0; r < rows; r++) {
